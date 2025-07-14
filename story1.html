@@ -1,0 +1,371 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Novel Nest - Story Detail</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+      color: #2d3436;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+    .btn {
+      @apply inline-block rounded-full font-medium transition-transform duration-300 ease-in-out cursor-pointer;
+      padding: 0.75rem 1.875rem;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-0.75rem);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+      font-weight: 700;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      border-radius: 2px;
+    }
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.25rem 0;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    .header.sticky {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #6c5ce7;
+      user-select: none;
+    }
+    .nav ul {
+      display: flex;
+      gap: 1.875rem;
+    }
+    .nav ul li a {
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 0.25rem;
+    }
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #6c5ce7;
+      transition: all 0.3s ease;
+    }
+    .nav ul li a:hover::after,
+    .nav ul li a.active::after {
+      width: 100%;
+    }
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6c5ce7;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+      .nav {
+        position: fixed;
+        top: 5rem;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 5rem);
+        background: white;
+        transition: all 0.3s ease;
+        z-index: 999;
+        overflow-y: auto;
+        padding-top: 2rem;
+      }
+      .nav.active {
+        left: 0;
+      }
+      .nav ul {
+        flex-direction: column;
+        padding: 0 1.875rem;
+        gap: 1.25rem;
+      }
+      .nav ul li {
+        margin: 0;
+      }
+    }
+    .story-header {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      padding: 0 1.25rem;
+      text-align: center;
+    }
+    .story-title {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #6c5ce7;
+    }
+    .story-author {
+      font-size: 1.125rem;
+      color: #636e72;
+      margin-bottom: 1rem;
+    }
+    .story-genre {
+      display: inline-block;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      padding: 0.25rem 1rem;
+      border-radius: 9999px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      user-select: none;
+      margin-bottom: 2rem;
+    }
+    .story-image {
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      border-radius: 0.625rem;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    }
+    .story-image img {
+      width: 100%;
+      height: auto;
+      display: block;
+      object-fit: cover;
+    }
+    .story-content {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 1.25rem;
+      font-size: 1.125rem;
+      line-height: 1.75;
+      color: #2d3436;
+      white-space: pre-line;
+    }
+    .back-link {
+      max-width: 900px;
+      margin: 3rem auto 0;
+      padding: 0 1.25rem;
+      text-align: center;
+    }
+    .back-link a {
+      color: #6c5ce7;
+      font-weight: 600;
+      text-decoration: underline;
+      transition: color 0.3s ease;
+    }
+    .back-link a:hover {
+      color: #5649c0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container mx-auto max-w-7xl px-5 flex justify-between items-center">
+      <div class="logo select-none">Novel Nest</div>
+      <button aria-label="Toggle navigation menu" class="mobile-nav-toggle md:hidden" id="mobileNavToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav aria-label="Primary Navigation" class="nav md:static fixed md:w-auto w-full md:h-auto h-[calc(100vh-5rem)] top-20 left-[-100%] md:flex md:items-center bg-white md:bg-transparent md:pt-0 pt-8 md:translate-x-0 transition-all duration-300 z-50" id="navMenu">
+        <ul class="flex flex-col md:flex-row md:gap-12 gap-6 px-5 md:px-0">
+          <li><a href="index.html" class="block font-medium relative">Home</a></li>
+          <li><a href="book.html" class="block font-medium relative">Books</a></li>
+          <li><a href="Authors.html" class="block font-medium relative">Authors</a></li>
+          <li><a href="User Stories.html" class="active block font-medium relative">User Stories</a></li>
+          <li><a href="Create Story.html" class="block font-medium relative">Create Story</a></li>
+          <li><a href="about.html" class="block font-medium relative">About</a></li>
+          <li><a href="contact us.html" class="block font-medium relative">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-[80px] pb-20 bg-gray-50 min-h-screen">
+    <article class="story-header" role="main" aria-label="Story detail">
+      <h1 class="story-title" id="storyTitle">Loading...</h1>
+      <p class="story-author" id="storyAuthor"></p>
+      <span class="story-genre" id="storyGenre"></span>
+    </article>
+
+    <div class="story-image" id="storyImageContainer" aria-label="Story cover image">
+      <img src="" alt="" id="storyImage" />
+    </div>
+
+    <section class="story-content" id="storyContent" tabindex="0">
+      Loading story content...
+    </section>
+
+    <div class="back-link">
+      <a href="User Stories.html" aria-label="Back to community stories list">
+        <i class="fas fa-arrow-left mr-2"></i>Back to Community Stories
+      </a>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-gray-300 py-12 mt-auto">
+    <div class="container mx-auto max-w-7xl px-5 text-center text-sm select-none">
+      &copy; 2023 Novel Nest. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const navMenu = document.getElementById('navMenu');
+    mobileNavToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      mobileNavToggle.querySelector('i').classList.toggle('fa-bars');
+      mobileNavToggle.querySelector('i').classList.toggle('fa-times');
+    });
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileNavToggle.querySelector('i').classList.add('fa-bars');
+        mobileNavToggle.querySelector('i').classList.remove('fa-times');
+      });
+    });
+
+    // Sticky Header
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 0) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
+
+    // Sample story data (simulate fetching by id)
+    const stories = [
+      {
+        id: "1",
+        title: "The Last Traveler",
+        author: "WanderingScribe",
+        genre: "Adventure",
+        img: "https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg",
+        alt: "A lone backpacker walking on a mountain trail at sunset with a vast landscape",
+        content: `The sun dipped below the horizon as the last traveler made his way through the winding mountain paths. Each step echoed the stories of countless journeys before him, but this one was different. This was a journey of discovery, not just of lands unknown, but of the self.
+
+He carried with him only a backpack and a heart full of hope. The wilderness whispered secrets, and the stars above promised guidance. Along the way, he met strangers who became friends, faced challenges that tested his spirit, and found beauty in the smallest moments.
+
+This is the tale of courage, resilience, and the endless quest for meaning in a vast world. Join the last traveler as he uncovers the magic hidden in every step of his path.`
+      },
+      {
+        id: "2",
+        title: "Starlight Promises",
+        author: "MoonlitWriter",
+        genre: "Romance",
+        img: "https://cdn.pixabay.com/photo/2023/08/20/08/16/ai-generated-8201916_1280.png",
+        alt: "Romantic couple under a starry sky with glowing lights and soft ambiance",
+        content: `Under the vast expanse of the night sky, two souls found each other amidst the twinkling stars. Their promises were whispered softly, carried by the gentle breeze that danced through the trees.
+
+Every moment was a promise of forever, a vow to stand by each other through the trials and triumphs of life. Their love was a beacon, shining bright even in the darkest nights.
+
+This is a story of hope, passion, and the unbreakable bonds forged under the starlight. Experience the journey of love that transcends time and space.`
+      },
+      {
+        id: "3",
+        title: "Mystic Woods",
+        author: "ForestDreamer",
+        genre: "Fantasy",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/forest-2565211_1280.jpg",
+        alt: "Enchanted forest with glowing plants and magical atmosphere",
+        content: `Deep within the Mystic Woods, magic thrived in every leaf and stone. The forest was alive with whispers of ancient spells and the laughter of unseen creatures.
+
+A young adventurer, drawn by tales of the forest's power, ventured into its depths. There, she discovered not only the secrets of the woods but also the strength within herself.
+
+Join her as she unravels the mysteries of the Mystic Woods and embraces her destiny.`
+      },
+      {
+        id: "4",
+        title: "Echoes of the Past",
+        author: "HistoryBuff",
+        genre: "Historical",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/pyramid-2565210_1280.jpg",
+        alt: "Ancient Egyptian pyramid with golden sunlight illuminating the scene",
+        content: `The sands of time hold many secrets, and none more captivating than those buried beneath the pyramids. A young historian's discovery of a hidden chamber sets off a chain of events that will change history forever.
+
+Through ancient scrolls and forgotten tales, she pieces together a story of love, betrayal, and power that echoes through the ages.
+
+Experience the past like never before in this gripping historical tale.`
+      }
+    ];
+
+    // Get story id from URL query string
+    function getStoryId() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('id') || "1"; // default to 1 if no id
+    }
+
+    function loadStory(id) {
+      const story = stories.find(s => s.id === id);
+      if (!story) {
+        document.getElementById('storyTitle').textContent = "Story Not Found";
+        document.getElementById('storyAuthor').textContent = "";
+        document.getElementById('storyGenre').textContent = "";
+        document.getElementById('storyImage').src = "";
+        document.getElementById('storyImage').alt = "";
+        document.getElementById('storyContent').textContent = "Sorry, the story you are looking for does not exist.";
+        return;
+      }
+      document.getElementById('storyTitle').textContent = story.title;
+      document.getElementById('storyAuthor').textContent = `By ${story.author}`;
+      document.getElementById('storyGenre').textContent = story.genre;
+      const imgEl = document.getElementById('storyImage');
+      imgEl.src = story.img;
+      imgEl.alt = story.alt;
+      document.getElementById('storyContent').textContent = story.content;
+    }
+
+    // Initialize
+    loadStory(getStoryId());
+  </script>
+</body>
+</html>

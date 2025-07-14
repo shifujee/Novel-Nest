@@ -1,0 +1,1083 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novel Nest - World of Novel Stories</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables */
+    :root {
+      --primary-color: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary-color: #00cec9;
+      --accent-color: #fd79a8;
+      --text-dark: #2d3436;
+      --text-light: #636e72;
+      --bg-light: #f9f9f9;
+      --white: #ffffff;
+      --primary-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      --secondary-gradient: linear-gradient(135deg, #00cec9 0%, #81ecec 100%);
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      background-color: var(--bg-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary-gradient);
+      color: var(--white);
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-color);
+      color: var(--white);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    /* Page Loader */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 0;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .nav ul {
+      display: flex;
+    }
+
+    .nav ul li {
+      margin-left: 30px;
+    }
+
+    .nav ul li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .nav ul li a:hover::after,
+    .nav ul li a.active::after {
+      width: 100%;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      height: 100vh;
+      background: url('https://cdn.pixabay.com/photo/2017/08/06/22/01/books-2596809_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: 70px;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      max-width: 600px;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 20px;
+    }
+
+    .hero h1 span {
+      color: var(--accent-color);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 30px;
+      opacity: 0.9;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 15px;
+    }
+
+    /* Features Section */
+    .features {
+      padding: 100px 0;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .feature-card {
+      background: var(--white);
+      padding: 40px 30px;
+      border-radius: 10px;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow);
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .feature-card i {
+      font-size: 3rem;
+      color: var(--primary-color);
+      margin-bottom: 20px;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+    }
+
+    /* Books Section */
+    .books {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .book-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow);
+    }
+
+    .book-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .book-image {
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .book-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .book-card:hover .book-image img {
+      transform: scale(1.05);
+    }
+
+    .book-info {
+      padding: 20px;
+    }
+
+    .rating {
+      margin-bottom: 10px;
+      color: #fdcb6e;
+    }
+
+    .book-info h3 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .author {
+      color: var(--text-light);
+      font-size: 0.9rem;
+      margin-bottom: 10px;
+    }
+
+    .price {
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .book-info .btn {
+      width: 100%;
+      text-align: center;
+      padding: 8px 0;
+    }
+
+    /* Community Stories */
+    .community-stories {
+      padding: 100px 0;
+      background: var(--white);
+    }
+
+    /* Authors Section */
+    .authors {
+      padding: 100px 0;
+      background: var(--bg-light);
+    }
+
+    .authors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .author-card {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      transition: var(--transition);
+      box-shadow: var(--box-shadow);
+    }
+
+    .author-card:hover {
+      transform: translateY(-10px);
+    }
+
+    .author-image {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 20px;
+      border: 5px solid var(--primary-color);
+    }
+
+    .author-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-card h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .author-card p {
+      color: var(--text-light);
+      margin-bottom: 15px;
+      font-size: 0.9rem;
+    }
+
+    .author-card p:last-of-type {
+      font-style: italic;
+      margin-bottom: 20px;
+    }
+
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-links a {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .social-links a:hover {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 100px 0;
+      background: var(--white);
+    }
+
+    .testimonial-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .testimonial {
+      background: var(--bg-light);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .testimonial-author img {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-right: 20px;
+      border: 3px solid var(--primary-color);
+    }
+
+    .testimonial-author-info h4 {
+      font-size: 1.2rem;
+      margin-bottom: 5px;
+    }
+
+    .testimonial-author-info p {
+      color: var(--text-light);
+      font-size: 0.9rem;
+    }
+
+    .testimonial-quote p {
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: var(--text-dark);
+    }
+
+    /* Newsletter */
+    .newsletter {
+      padding: 80px 0;
+      background: var(--primary-gradient);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px 0 0 50px;
+      font-size: 1rem;
+    }
+
+    .newsletter-form button {
+      padding: 15px 30px;
+      background: var(--accent-color);
+      color: var(--white);
+      border: none;
+      border-radius: 0 50px 50px 0;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-form button:hover {
+      background: #e84393;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 80px 0 0;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary-color);
+    }
+
+    .footer-section p {
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      background: var(--primary-color);
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--primary-color);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.7;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-in-up {
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    .delay-200 {
+      animation-delay: 0.2s;
+    }
+
+    .delay-400 {
+      animation-delay: 0.4s;
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--white);
+        transition: var(--transition);
+        z-index: 999;
+      }
+
+      .nav.active {
+        left: 0;
+      }
+
+      .nav ul {
+        flex-direction: column;
+        padding: 30px;
+      }
+
+      .nav ul li {
+        margin: 15px 0;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .btn-container {
+        flex-direction: column;
+      }
+
+      .section-title {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader"></div>
+  </div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">Novel Nest</div>
+      <button class="mobile-nav-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav">
+        <ul>
+          <li><a href="E:\websitebuildlearn\full project 1\index.html" class="active">Home</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\book.html">Books</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Authors.html">Authors</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\User Stories.html">User Stories</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Create Story.html">Create Story</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\about.html">About</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\contact us.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-content">
+      <h1 class="fade-in-up">Explore Magical <span>Novel</span> Worlds</h1>
+      <p class="fade-in-up delay-200">Discover our collection of captivating novel stories and characters from renowned authors and our community.</p>
+      <div class="btn-container fade-in-up delay-400">
+        <a href="E:\websitebuildlearn\full project 1\brower books.html" class="btn">Browse Books</a>
+        <a href="E:\websitebuildlearn\full project 1\community stories.html" class="btn btn-secondary">Community Stories</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="container">
+      <h2 class="section-title">Why Choose Us</h2>
+      <div class="features-grid">
+        <div class="feature-card">
+          <i class="fas fa-book-open"></i>
+          <h3>Vast Collection</h3>
+          <p>Explore our extensive library featuring thousands of novel titles across all genres.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-pen-fancy"></i>
+          <h3>Create & Share</h3>
+          <p>Write your own novel stories and share them with our passionate community of readers.</p>
+        </div>
+        <div class="feature-card">
+          <i class="fas fa-calendar-alt"></i>
+          <h3>Special Events</h3>
+          <p>Participate in community events, writing contests, and virtual book festivals.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="featured" class="books">
+    <div class="container">
+      <h2 class="section-title">Featured Novels</h2>
+      <div class="books-grid">
+        <div class="book-card">
+          <div class="book-image">
+            <img src="https://cdn.pixabay.com/photo/2023/01/22/11/44/anime-7736177_1280.jpg" alt="Celestial Blade">
+          </div>
+          <div class="book-info">
+            <div class="rating" data-rating="4.8">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <h3>Celestial Blade</h3>
+            <p class="author">By Hiroshi Takahashi</p>
+            <p class="price">New Episodes</p>
+            <a href="book-detail.html" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-image">
+            <img src="https://cdn.pixabay.com/photo/2023/08/20/08/19/ai-generated-8201925_1280.png" alt="Mystic Guardian">
+          </div>
+          <div class="book-info">
+            <div class="rating" data-rating="4.5">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <h3>Mystic Guardian</h3>
+            <p class="author">By Yuki Tanaka</p>
+            <p class="price">Season 3</p>
+            <a href="book-detail.html" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-image">
+            <img src="https://cdn.pixabay.com/photo/2024/03/03/12/42/ai-generated-8610368_1280.png" alt="Spirit Chronicles">
+          </div>
+          <div class="book-info">
+            <div class="rating" data-rating="4.7">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <h3>Spirit Chronicles</h3>
+            <p class="author">By Keiko Yamada</p>
+            <p class="price">Trending</p>
+            <a href="book-detail.html" class="btn">View Details</a>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-image">
+            <img src="https://cdn.pixabay.com/photo/2022/01/27/03/06/samurai-6970968_1280.png" alt="Shadow Warrior">
+          </div>
+          <div class="book-info">
+            <div class="rating" data-rating="4.9">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+            <h3>Shadow Warrior</h3>
+            <p class="author">By Akira Matsumoto</p>
+            <p class="price">Fan Favorite</p>
+            <a href="book-detail.html" class="btn">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <section class="community-stories">
+    <div class="container">
+      <h2 class="section-title">Community Created Stories</h2>
+      <p style="text-align: center; margin-bottom: 3rem; color: var(--text-light);">
+        Discover original novel stories written by our talented community members. Read, like, and comment on their work!
+      </p>
+      
+      <div class="books-grid">
+        <div class="book-card">
+          <div class="book-image">
+            <img src="https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg" alt="The Last Traveler">
+            <div class="genre-badge" style="position: absolute; top: 10px; left: 10px; background: var(--primary-gradient); color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem; z-index: 2;">Adventure</div>
+          </div>
+          <div class="book-info">
+            <div class="rating" data-rating="4.6">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+            <h3>The Last Traveler</h3>
+            <p class="author">By WanderingScribe</p>
+            <p class="price">Community Pick</p>
+            <a href="user-stories.html" class="btn">Read Story</a>
+          </div>
+        </div>
+        <div class="book-card">
+          <div class="book-image">
+            <img src="https://cdn.pixabay.com/photo/2023/08/20/08/16/ai-generated-8201916_1280.png" alt="Starlight Promises">
+            <div class="genre-badge" style="position: absolute; top: 10px; left: 10px; background: var(--primary-gradient); color: white; padding: 0.25rem 0.75rem; border-radius: 50px; font-size: 0.8rem; z-index: 2;">Romance</div>
+          </div>
+          <div class="book-info">
+            <div class="rating" data-rating="4.3">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="far fa-star"></i>
+            </div>
+            <h3>Starlight Promises</h3>
+            <p class="author">By MoonlitWriter</p>
+            <p class="price">Trending</p>
+            <a href="user-stories.html" class="btn">Read Story</a>
+          </div>
+        </div>
+      </div>
+      
+      <div style="text-align: center; margin-top: 2rem;">
+        <a href="user-stories.html" class="btn btn-secondary">View All Community Stories</a>
+        <a href="story-submission.html" class="btn" style="margin-left: 1rem;">Create Your Own Story</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="authors">
+    <div class="container">
+      <h2 class="section-title">Popular Characters</h2>
+      <div class="authors-grid">
+        <div class="author-card">
+          <div class="author-image">
+            <img src="https://cdn.pixabay.com/photo/2022/08/19/19/29/anime-7397617_1280.png" alt="Character 1">
+          </div>
+          <h3>Anya Forger</h3>
+          <p>Telepathic Child</p>
+          <p>"Adorable young girl with telepathic abilities from the popular series 'Spy x Family'."</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="author-card">
+          <div class="author-image">
+            <img src="https://cdn.pixabay.com/photo/2023/04/26/09/25/ai-generated-7951985_1280.png" alt="Character 2">
+          </div>
+          <h3>Kai Takashi</h3>
+          <p>Elemental Mage</p>
+          <p>"Powerful magic user with the ability to control all four elements from 'Mystic Guardian'."</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="author-card">
+          <div class="author-image">
+            <img src="https://cdn.pixabay.com/photo/2020/10/13/21/49/dragon-ball-z-5652889_1280.png" alt="Character 3">
+          </div>
+          <h3>Vegeta</h3>
+          <p>Saiyan Prince</p>
+          <p>"Proud Saiyan warrior prince from 'Dragon Ball Z' with incredible combat skills and fierce determination."</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+        <div class="author-card">
+          <div class="author-image">
+            <img src="https://cdn.pixabay.com/photo/2023/10/23/14/37/bee-8336245_1280.png" alt="Luna Starlight">
+          </div>
+          <h3>Luna Starlight</h3>
+          <p>Magical Storyteller</p>
+          <p>"Creative storyteller with the magical ability to bring characters to life through her enchanting narratives."</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <h2 class="section-title">What Our Fans Say</h2>
+      <div class="testimonial-container">
+        <div class="testimonial">
+          <div class="testimonial-author">
+            <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Testimonial Author">
+            <div class="testimonial-author-info">
+              <h4>Mika Tanaka</h4>
+              <p>Novel Enthusiast</p>
+            </div>
+          </div>
+          <div class="testimonial-quote">
+            <p>"Novel Nest has transformed my novel reading experience. I love being able to read stories from other fans and share my own creations with the community!"</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter">
+    <div class="container">
+      <h2>Join Our Novel Community</h2>
+      <p>Stay updated with the latest releases, author interviews, exclusive book events, and community stories. Join our creative community today!</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Novel Nest</h3>
+          <p>Your portal to endless worlds of novels. Discover, explore, and experience the magic of literary masterpieces.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+          <li><a href="E:\websitebuildlearn\full project 1\index.html" class="active">Home</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\book.html">Books</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Authors.html">Authors</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\User Stories.html">User Stories</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Create Story.html">Create Story</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\about.html">About</a></li>
+           </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul class="footer-links">
+            <li><a href="E:\projects\full project 1\pj\Create Story.html">Create Story</a></li>
+            <li><a href="#">Writer's Guidelines</a></li>
+            <li><a href="#">Content Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Novel Street, Literary Lane, New York</p>
+          <p><i class="fas fa-phone"></i> +1 555-123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@novelnest.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Novel Nest. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Page Loader
+    window.addEventListener('load', function() {
+      document.querySelector('.page-loader').style.display = 'none';
+    });
+
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const nav = document.querySelector('.nav');
+
+    mobileNavToggle.addEventListener('click', function() {
+      nav.classList.toggle('active');
+      this.querySelector('i').classList.toggle('fa-times');
+      this.querySelector('i').classList.toggle('fa-bars');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        nav.classList.remove('active');
+        mobileNavToggle.querySelector('i').classList.add('fa-bars');
+        mobileNavToggle.querySelector('i').classList.remove('fa-times');
+      });
+    });
+
+    // Sticky Header
+    window.addEventListener('scroll', function() {
+      const header = document.querySelector('.header');
+      header.classList.toggle('sticky', window.scrollY > 0);
+    });
+
+    // Rating Stars
+    document.querySelectorAll('.rating').forEach(rating => {
+      const ratingValue = parseFloat(rating.getAttribute('data-rating'));
+      const starsContainer = rating;
+      starsContainer.innerHTML = '';
+      
+      // Full stars
+      const fullStars = Math.floor(ratingValue);
+      for (let i = 0; i < fullStars; i++) {
+        starsContainer.innerHTML += '<i class="fas fa-star"></i>';
+      }
+      
+      // Half star
+      if (ratingValue % 1 >= 0.5) {
+        starsContainer.innerHTML += '<i class="fas fa-star-half-alt"></i>';
+      }
+      
+      // Empty stars
+      const emptyStars = 5 - Math.ceil(ratingValue);
+      for (let i = 0; i < emptyStars; i++) {
+        starsContainer.innerHTML += '<i class="far fa-star"></i>';
+      }
+    });
+  </script>
+</body>
+</html>

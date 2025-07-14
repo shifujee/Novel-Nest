@@ -1,0 +1,553 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Novel Nest - Browse Books</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+      color: #2d3436;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+    .btn {
+      @apply inline-block rounded-full font-medium transition-transform duration-300 ease-in-out cursor-pointer;
+      padding: 0.75rem 1.875rem;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-0.75rem);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+    .btn-secondary {
+      background: white;
+      color: #6c5ce7;
+      border: 2px solid #6c5ce7;
+    }
+    .btn-secondary:hover {
+      background: #6c5ce7;
+      color: white;
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+      font-weight: 700;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      border-radius: 2px;
+    }
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.25rem 0;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    .header.sticky {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #6c5ce7;
+      user-select: none;
+    }
+    .nav ul {
+      display: flex;
+      gap: 1.875rem;
+    }
+    .nav ul li a {
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 0.25rem;
+    }
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #6c5ce7;
+      transition: all 0.3s ease;
+    }
+    .nav ul li a:hover::after,
+    .nav ul li a.active::after {
+      width: 100%;
+    }
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6c5ce7;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+      .nav {
+        position: fixed;
+        top: 5rem;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 5rem);
+        background: white;
+        transition: all 0.3s ease;
+        z-index: 999;
+        overflow-y: auto;
+        padding-top: 2rem;
+      }
+      .nav.active {
+        left: 0;
+      }
+      .nav ul {
+        flex-direction: column;
+        padding: 0 1.875rem;
+        gap: 1.25rem;
+      }
+      .nav ul li {
+        margin: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container mx-auto max-w-7xl px-5 flex justify-between items-center">
+      <div class="logo select-none">Novel Nest</div>
+      <button aria-label="Toggle navigation menu" class="mobile-nav-toggle md:hidden" id="mobileNavToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav">
+        <ul>
+          <li><a href="E:\websitebuildlearn\full project 1\index.html" class="active">Home</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\book.html">Books</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Authors.html">Authors</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\User Stories.html">User Stories</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Create Story.html">Create Story</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\about.html">About</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\contact us.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-[80px] pb-20 px-5 bg-gray-50 min-h-screen">
+    <div class="container mx-auto max-w-7xl">
+      <h1 class="section-title">Browse Books</h1>
+
+      <!-- Search and Filters -->
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-10 gap-4">
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Search books by title or author..."
+          class="w-full md:w-1/3 px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-label="Search books"
+        />
+        <select
+          id="genreFilter"
+          class="w-full md:w-1/4 px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          aria-label="Filter by genre"
+        >
+          <option value="">All Genres</option>
+          <option value="Adventure">Adventure</option>
+          <option value="Romance">Romance</option>
+          <option value="Fantasy">Fantasy</option>
+          <option value="Sci-Fi">Sci-Fi</option>
+          <option value="Mystery">Mystery</option>
+          <option value="Thriller">Thriller</option>
+          <option value="Historical">Historical</option>
+        </select>
+      </div>
+
+      <!-- Books Grid -->
+      <div id="booksGrid" class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        <!-- Book cards will be injected here by JS -->
+      </div>
+
+      <!-- Pagination -->
+      <div class="mt-12 flex justify-center space-x-4" id="pagination">
+        <!-- Pagination buttons injected by JS -->
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-gray-300 py-12 mt-auto">
+    <div class="container mx-auto max-w-7xl px-5 text-center text-sm select-none">
+      &copy; 2025 Novel Nest. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const navMenu = document.getElementById('navMenu');
+    mobileNavToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      mobileNavToggle.querySelector('i').classList.toggle('fa-bars');
+      mobileNavToggle.querySelector('i').classList.toggle('fa-times');
+    });
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileNavToggle.querySelector('i').classList.add('fa-bars');
+        mobileNavToggle.querySelector('i').classList.remove('fa-times');
+      });
+    });
+
+    // Sticky Header
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 0) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
+
+    // Sample book data with genre-specific images from Pixabay and placehold.co
+    const books = [
+      {
+        id: 1,
+        title: "Celestial Blade",
+        author: "Hiroshi Takahashi",
+        genre: "Fantasy",
+        rating: 4.8,
+        price: "New Episodes",
+        img: "https://cdn.pixabay.com/photo/2023/01/22/11/44/anime-7736177_1280.jpg",
+        alt: "Cover art of Celestial Blade novel featuring a celestial sword glowing with blue light in a starry night sky",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 2,
+        title: "Mystic Guardian",
+        author: "Yuki Tanaka",
+        genre: "Fantasy",
+        rating: 4.5,
+        price: "Season 3",
+        img: "https://cdn.pixabay.com/photo/2023/08/20/08/19/ai-generated-8201925_1280.png",
+        alt: "Cover art of Mystic Guardian novel showing a mage with glowing hands surrounded by mystical symbols",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 3,
+        title: "Spirit Chronicles",
+        author: "Keiko Yamada",
+        genre: "Adventure",
+        rating: 4.7,
+        price: "Trending",
+        img: "https://cdn.pixabay.com/photo/2024/03/03/12/42/ai-generated-8610368_1280.png",
+        alt: "Cover art of Spirit Chronicles novel depicting a mystical forest with glowing spirits floating around",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 4,
+        title: "Shadow Warrior",
+        author: "Akira Matsumoto",
+        genre: "Thriller",
+        rating: 4.9,
+        price: "Fan Favorite",
+        img: "https://cdn.pixabay.com/photo/2022/01/27/03/06/samurai-6970968_1280.png",
+        alt: "Cover art of Shadow Warrior novel showing a samurai warrior in dark armor with a katana under moonlight",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 5,
+        title: "The Last Traveler",
+        author: "WanderingScribe",
+        genre: "Adventure",
+        rating: 4.6,
+        price: "Community Pick",
+        img: "https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg",
+        alt: "Cover art of The Last Traveler novel showing a lone backpacker walking on a mountain trail at sunset",
+        detailLink: "user-stories.html"
+      },
+      {
+        id: 6,
+        title: "Starlight Promises",
+        author: "MoonlitWriter",
+        genre: "Romance",
+        rating: 4.3,
+        price: "Trending",
+        img: "https://cdn.pixabay.com/photo/2023/08/20/08/16/ai-generated-8201916_1280.png",
+        alt: "Cover art of Starlight Promises novel showing a romantic couple under a starry sky with glowing lights",
+        detailLink: "user-stories.html"
+      },
+      {
+        id: 7,
+        title: "Dragon's Legacy",
+        author: "Lara Chen",
+        genre: "Fantasy",
+        rating: 4.4,
+        price: "$9.99",
+        img: "https://placehold.co/400x288/png?text=Dragon%27s+Legacy+Book+Cover",
+        alt: "Cover art of Dragon's Legacy novel showing a fierce dragon flying over mountains at sunset",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 8,
+        title: "Mystery of the Lost City",
+        author: "James Carter",
+        genre: "Mystery",
+        rating: 4.1,
+        price: "$7.99",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/ancient-2565207_1280.jpg",
+        alt: "Cover art of Mystery of the Lost City novel showing ancient ruins in a jungle with a mysterious glow",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 9,
+        title: "Galactic Frontier",
+        author: "Samantha Lee",
+        genre: "Sci-Fi",
+        rating: 4.6,
+        price: "$12.99",
+        img: "https://cdn.pixabay.com/photo/2016/11/29/03/53/space-1867275_1280.jpg",
+        alt: "Cover art of Galactic Frontier novel showing a spaceship flying through a colorful galaxy",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 10,
+        title: "Whispers in the Dark",
+        author: "Michael Stone",
+        genre: "Thriller",
+        rating: 4.2,
+        price: "$8.99",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/ghost-2565208_1280.jpg",
+        alt: "Cover art of Whispers in the Dark novel showing a shadowy figure in a foggy alley",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 11,
+        title: "Love in Paris",
+        author: "Emily Rose",
+        genre: "Romance",
+        rating: 4.0,
+        price: "$6.99",
+        img: "https://cdn.pixabay.com/photo/2016/11/29/03/53/couple-1867276_1280.jpg",
+        alt: "Cover art of Love in Paris novel showing a couple embracing near the Eiffel Tower at sunset",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 12,
+        title: "The Time Traveler's Diary",
+        author: "David Kim",
+        genre: "Sci-Fi",
+        rating: 4.5,
+        price: "$11.99",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/clock-2565209_1280.jpg",
+        alt: "Cover art of The Time Traveler's Diary novel showing a clock with swirling time vortex",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 13,
+        title: "Secrets of the Pharaoh",
+        author: "Nina Patel",
+        genre: "Historical",
+        rating: 4.3,
+        price: "$9.49",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/pyramid-2565210_1280.jpg",
+        alt: "Cover art of Secrets of the Pharaoh novel showing an ancient Egyptian tomb with hieroglyphs",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 14,
+        title: "Enchanted Forest",
+        author: "Olivia Green",
+        genre: "Fantasy",
+        rating: 4.7,
+        price: "$10.99",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/forest-2565211_1280.jpg",
+        alt: "Cover art of Enchanted Forest novel showing a magical forest with glowing plants and creatures",
+        detailLink: "book-detail.html"
+      },
+      {
+        id: 15,
+        title: "The Detective's Code",
+        author: "Robert Black",
+        genre: "Mystery",
+        rating: 4.4,
+        price: "$8.49",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/detective-2565212_1280.jpg",
+        alt: "Cover art of The Detective's Code novel showing a detective silhouette with a magnifying glass",
+        detailLink: "book-detail.html"
+      }
+    ];
+
+    const booksPerPage = 8;
+    let currentPage = 1;
+    let filteredBooks = [...books];
+
+    const booksGrid = document.getElementById('booksGrid');
+    const pagination = document.getElementById('pagination');
+    const searchInput = document.getElementById('searchInput');
+    const genreFilter = document.getElementById('genreFilter');
+
+    function renderBooks() {
+      booksGrid.innerHTML = '';
+      const start = (currentPage - 1) * booksPerPage;
+      const end = start + booksPerPage;
+      const booksToShow = filteredBooks.slice(start, end);
+
+      if (booksToShow.length === 0) {
+        booksGrid.innerHTML = '<p class="col-span-full text-center text-gray-600">No books found.</p>';
+        return;
+      }
+
+      booksToShow.forEach(book => {
+        const bookCard = document.createElement('article');
+        bookCard.className = 'book-card bg-white rounded-xl shadow-lg overflow-hidden flex flex-col cursor-default hover:-translate-y-2 transition-transform';
+
+        bookCard.innerHTML = `
+          <div class="book-image relative h-72 overflow-hidden">
+            <img src="${book.img}" alt="${book.alt}" class="w-full h-full object-cover transition-transform duration-300" loading="lazy" />
+          </div>
+          <div class="book-info p-5 flex flex-col flex-grow">
+            <div aria-label="Rating: ${book.rating} out of 5 stars" class="rating mb-2 text-yellow-400 text-lg" data-rating="${book.rating}"></div>
+            <h3 class="text-xl font-semibold mb-1">${book.title}</h3>
+            <p class="author text-gray-500 mb-3">By ${book.author}</p>
+            <p class="price text-indigo-600 font-semibold mb-5">${book.price}</p>
+            <a href="${book.detailLink}" class="btn mt-auto rounded-full bg-gradient-to-r from-indigo-600 to-purple-400 px-6 py-2 text-center font-semibold hover:shadow-lg transition-transform transform hover:-translate-y-1">View Details</a>
+          </div>
+        `;
+        booksGrid.appendChild(bookCard);
+      });
+
+      // After adding cards, render stars
+      renderStars();
+    }
+
+    function renderStars() {
+      document.querySelectorAll('.rating').forEach(rating => {
+        const ratingValue = parseFloat(rating.getAttribute('data-rating'));
+        rating.innerHTML = '';
+        const fullStars = Math.floor(ratingValue);
+        for (let i = 0; i < fullStars; i++) {
+          rating.innerHTML += '<i class="fas fa-star"></i>';
+        }
+        if (ratingValue % 1 >= 0.5) {
+          rating.innerHTML += '<i class="fas fa-star-half-alt"></i>';
+        }
+        const emptyStars = 5 - Math.ceil(ratingValue);
+        for (let i = 0; i < emptyStars; i++) {
+          rating.innerHTML += '<i class="far fa-star"></i>';
+        }
+      });
+    }
+
+    function renderPagination() {
+      pagination.innerHTML = '';
+      const totalPages = Math.ceil(filteredBooks.length / booksPerPage);
+      if (totalPages <= 1) return;
+
+      // Previous button
+      const prevBtn = document.createElement('button');
+      prevBtn.textContent = 'Prev';
+      prevBtn.disabled = currentPage === 1;
+      prevBtn.className = `px-4 py-2 rounded-md font-semibold ${prevBtn.disabled ? 'bg-gray-300 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`;
+      prevBtn.addEventListener('click', () => {
+        if (currentPage > 1) {
+          currentPage--;
+          updateDisplay();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+      pagination.appendChild(prevBtn);
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        const pageBtn = document.createElement('button');
+        pageBtn.textContent = i;
+        pageBtn.className = `px-4 py-2 rounded-md font-semibold ${i === currentPage ? 'bg-indigo-700 text-white' : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-300'}`;
+        pageBtn.addEventListener('click', () => {
+          currentPage = i;
+          updateDisplay();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        pagination.appendChild(pageBtn);
+      }
+
+      // Next button
+      const nextBtn = document.createElement('button');
+      nextBtn.textContent = 'Next';
+      nextBtn.disabled = currentPage === totalPages;
+      nextBtn.className = `px-4 py-2 rounded-md font-semibold ${nextBtn.disabled ? 'bg-gray-300 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700'}`;
+      nextBtn.addEventListener('click', () => {
+        if (currentPage < totalPages) {
+          currentPage++;
+          updateDisplay();
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+      pagination.appendChild(nextBtn);
+    }
+
+    function updateDisplay() {
+      renderBooks();
+      renderPagination();
+    }
+
+    function filterBooks() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const genre = genreFilter.value;
+
+      filteredBooks = books.filter(book => {
+        const matchesSearch =
+          book.title.toLowerCase().includes(searchTerm) ||
+          book.author.toLowerCase().includes(searchTerm);
+        const matchesGenre = genre === '' || book.genre === genre;
+        return matchesSearch && matchesGenre;
+      });
+      currentPage = 1;
+      updateDisplay();
+    }
+
+    searchInput.addEventListener('input', filterBooks);
+    genreFilter.addEventListener('change', filterBooks);
+
+    // Initial render
+    updateDisplay();
+  </script>
+</body>
+</html>

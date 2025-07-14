@@ -1,0 +1,521 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Novel Nest - Community Stories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  />
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: #f9f9f9;
+      color: #2d3436;
+      overflow-x: hidden;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.3s ease;
+    }
+    .btn {
+      padding: 0.75rem 1.875rem;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      border: none;
+    }
+    .btn:hover {
+      transform: translateY(-0.75rem);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+    .btn-secondary {
+      background: white;
+      color: #6c5ce7;
+      border: 2px solid #6c5ce7;
+    }
+    .btn-secondary:hover {
+      background: #6c5ce7;
+      color: white;
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+      font-weight: 700;
+    }
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      border-radius: 2px;
+    }
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 1.25rem 0;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    .header.sticky {
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    }
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #6c5ce7;
+      user-select: none;
+    }
+    .nav ul {
+      display: flex;
+      gap: 1.875rem;
+    }
+    .nav ul li a {
+      font-weight: 500;
+      position: relative;
+      padding-bottom: 0.25rem;
+    }
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: #6c5ce7;
+      transition: all 0.3s ease;
+    }
+    .nav ul li a:hover::after,
+    .nav ul li a.active::after {
+      width: 100%;
+    }
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: #6c5ce7;
+      cursor: pointer;
+    }
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+      .nav {
+        position: fixed;
+        top: 5rem;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 5rem);
+        background: white;
+        transition: all 0.3s ease;
+        z-index: 999;
+        overflow-y: auto;
+        padding-top: 2rem;
+      }
+      .nav.active {
+        left: 0;
+      }
+      .nav ul {
+        flex-direction: column;
+        padding: 0 1.875rem;
+        gap: 1.25rem;
+      }
+      .nav ul li {
+        margin: 0;
+      }
+    }
+    .story-card {
+      background: white;
+      border-radius: 0.625rem;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: all 0.3s ease;
+      cursor: default;
+    }
+    .story-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(108, 92, 231, 0.3);
+    }
+    .story-image {
+      width: 100%;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+    }
+    .story-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .story-card:hover .story-image img {
+      transform: scale(1.05);
+    }
+    .genre-badge {
+      position: absolute;
+      top: 0.5rem;
+      left: 0.5rem;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      user-select: none;
+      z-index: 10;
+    }
+    .story-content {
+      padding: 1.25rem 1.5rem 2rem;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .story-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #6c5ce7;
+    }
+    .story-author {
+      font-size: 0.9rem;
+      color: #636e72;
+      margin-bottom: 1rem;
+    }
+    .story-excerpt {
+      flex-grow: 1;
+      font-size: 1rem;
+      color: #2d3436;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+    .btn-read {
+      align-self: flex-start;
+      padding: 0.5rem 1.5rem;
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      border-radius: 9999px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-read:hover {
+      background-color: #5649c0;
+    }
+    /* Filter bar */
+    .filter-bar {
+      max-width: 7xl;
+      margin: 0 auto 3rem;
+      padding: 0 1.25rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+    .filter-btn {
+      padding: 0.5rem 1.25rem;
+      border-radius: 9999px;
+      border: 2px solid #6c5ce7;
+      color: #6c5ce7;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      user-select: none;
+      background-color: white;
+    }
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      color: white;
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+    /* Search bar */
+    .search-bar {
+      max-width: 7xl;
+      margin: 0 auto 3rem;
+      padding: 0 1.25rem;
+      display: flex;
+      justify-content: center;
+    }
+    .search-input {
+      width: 100%;
+      max-width: 500px;
+      padding: 0.75rem 1.25rem;
+      border-radius: 9999px;
+      border: 2px solid #6c5ce7;
+      font-size: 1rem;
+      outline-offset: 2px;
+      transition: border-color 0.3s ease;
+    }
+    .search-input:focus {
+      border-color: #5649c0;
+    }
+  </style>
+</head>
+<body>
+  <header class="header" id="header">
+    <div class="container mx-auto max-w-7xl px-5 flex justify-between items-center">
+      <div class="logo select-none">Novel Nest</div>
+      <button aria-label="Toggle navigation menu" class="mobile-nav-toggle md:hidden" id="mobileNavToggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav aria-label="Primary Navigation" class="nav md:static fixed md:w-auto w-full md:h-auto h-[calc(100vh-5rem)] top-20 left-[-100%] md:flex md:items-center bg-white md:bg-transparent md:pt-0 pt-8 md:translate-x-0 transition-all duration-300 z-50" id="navMenu">
+        <ul class="flex flex-col md:flex-row md:gap-12 gap-6 px-5 md:px-0">
+          <li><a href="index.html" class="block font-medium relative">Home</a></li>
+          <li><a href="book.html" class="block font-medium relative">Books</a></li>
+          <li><a href="Authors.html" class="block font-medium relative">Authors</a></li>
+          <li><a href="User Stories.html" class="active block font-medium relative">User Stories</a></li>
+          <li><a href="Create Story.html" class="block font-medium relative">Create Story</a></li>
+          <li><a href="about.html" class="block font-medium relative">About</a></li>
+          <li><a href="contact us.html" class="block font-medium relative">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main class="pt-[80px] pb-20 px-5 bg-gray-50 min-h-screen">
+    <div class="container mx-auto max-w-7xl">
+      <h1 class="section-title">Community Created Stories</h1>
+      <p class="text-center max-w-3xl mx-auto mb-12 text-gray-600 text-lg">
+        Discover original novel stories written by our talented community members. Read, like, and comment on their work!
+      </p>
+
+      <!-- Search Bar -->
+      <div class="search-bar">
+        <input
+          type="search"
+          id="searchInput"
+          class="search-input"
+          placeholder="Search stories by title or author..."
+          aria-label="Search stories"
+        />
+      </div>
+
+      <!-- Genre Filter Buttons -->
+      <div class="filter-bar" role="list" aria-label="Filter stories by genre" id="genreFilters">
+        <button class="filter-btn active" data-genre="">All</button>
+        <button class="filter-btn" data-genre="Adventure">Adventure</button>
+        <button class="filter-btn" data-genre="Romance">Romance</button>
+        <button class="filter-btn" data-genre="Fantasy">Fantasy</button>
+        <button class="filter-btn" data-genre="Historical">Historical</button>
+        <button class="filter-btn" data-genre="Sci-Fi">Sci-Fi</button>
+        <button class="filter-btn" data-genre="Mystery">Mystery</button>
+        <button class="filter-btn" data-genre="Thriller">Thriller</button>
+      </div>
+
+      <div id="storiesGrid" class="grid gap-8 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4" aria-live="polite" aria-atomic="true">
+        <!-- Story cards injected by JS -->
+      </div>
+
+      <div class="mt-12 flex justify-center gap-6">
+        <a href="User Stories.html" class="btn-secondary px-8 py-3 rounded-full font-semibold">View All Community Stories</a>
+        <a href="Create Story.html" class="btn px-8 py-3 rounded-full font-semibold">Create Your Own Story</a>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-gray-900 text-gray-300 py-12 mt-auto">
+    <div class="container mx-auto max-w-7xl px-5 text-center text-sm select-none">
+      &copy; 2023 Novel Nest. All Rights Reserved.
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.getElementById('mobileNavToggle');
+    const navMenu = document.getElementById('navMenu');
+    mobileNavToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+      mobileNavToggle.querySelector('i').classList.toggle('fa-bars');
+      mobileNavToggle.querySelector('i').classList.toggle('fa-times');
+    });
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => {
+        navMenu.classList.remove('active');
+        mobileNavToggle.querySelector('i').classList.add('fa-bars');
+        mobileNavToggle.querySelector('i').classList.remove('fa-times');
+      });
+    });
+
+    // Sticky Header
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('header');
+      if (window.scrollY > 0) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
+
+    // Sample community stories data
+    const stories = [
+      {
+        id: 1,
+        title: "The Last Traveler",
+        author: "WanderingScribe",
+        genre: "Adventure",
+        excerpt: "A thrilling journey of a lone backpacker exploring unknown lands and facing unexpected challenges.",
+        img: "https://cdn.pixabay.com/photo/2022/12/01/04/40/backpacker-7628303_1280.jpg",
+        alt: "A lone backpacker walking on a mountain trail at sunset with a vast landscape",
+        readLink: "E:/websitebuildlearn/full project 1/story1.html"
+      },
+      {
+        id: 2,
+        title: "Starlight Promises",
+        author: "MoonlitWriter",
+        genre: "Romance",
+        excerpt: "A heartfelt tale of two souls destined to meet under the shimmering stars and the promises they keep.",
+        img: "https://cdn.pixabay.com/photo/2023/08/20/08/16/ai-generated-8201916_1280.png",
+        alt: "Romantic couple under a starry sky with glowing lights and soft ambiance",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      },
+      {
+        id: 3,
+        title: "Mystic Woods",
+        author: "ForestDreamer",
+        genre: "Fantasy",
+        excerpt: "Enter a magical forest where ancient secrets and mystical creatures await the brave adventurer.",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/forest-2565211_1280.jpg",
+        alt: "Enchanted forest with glowing plants and magical atmosphere",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      },
+      {
+        id: 4,
+        title: "Echoes of the Past",
+        author: "HistoryBuff",
+        genre: "Historical",
+        excerpt: "A gripping story that unravels the mysteries of a forgotten era through the eyes of a young historian.",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/pyramid-2565210_1280.jpg",
+        alt: "Ancient Egyptian pyramid with golden sunlight illuminating the scene",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      },
+      {
+        id: 5,
+        title: "Cyber Shadows",
+        author: "TechnoMage",
+        genre: "Sci-Fi",
+        excerpt: "In a futuristic city, a hacker uncovers a conspiracy that could change the fate of humanity forever.",
+        img: "https://cdn.pixabay.com/photo/2016/11/29/03/53/space-1867275_1280.jpg",
+        alt: "Futuristic cityscape with neon lights and flying vehicles at night",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      },
+      {
+        id: 6,
+        title: "Whispering Secrets",
+        author: "MysteryLover",
+        genre: "Mystery",
+        excerpt: "A detective's pursuit of truth leads to dark secrets hidden in a small town's quiet streets.",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/ancient-2565207_1280.jpg",
+        alt: "Foggy street with old buildings and mysterious shadows",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      },
+      {
+        id: 7,
+        title: "Heartstrings",
+        author: "RomanceQueen",
+        genre: "Romance",
+        excerpt: "A touching story of love, loss, and the power of second chances in the city of lights.",
+        img: "https://cdn.pixabay.com/photo/2016/11/29/03/53/couple-1867276_1280.jpg",
+        alt: "Couple embracing near the Eiffel Tower at sunset with warm colors",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      },
+      {
+        id: 8,
+        title: "The Forgotten Realm",
+        author: "EpicTales",
+        genre: "Fantasy",
+        excerpt: "A band of heroes embarks on a quest to reclaim a lost kingdom from the forces of darkness.",
+        img: "https://cdn.pixabay.com/photo/2017/08/01/00/15/dragon-2565206_1280.jpg",
+        alt: "Majestic dragon flying over a medieval castle surrounded by mountains",
+        readLink: "E:\websitebuildlearn\full project 1\story1.html"
+      }
+    ];
+
+    const storiesGrid = document.getElementById('storiesGrid');
+    const searchInput = document.getElementById('searchInput');
+    const genreFilters = document.getElementById('genreFilters');
+    let activeGenre = '';
+    let searchTerm = '';
+
+    function renderStories() {
+      storiesGrid.innerHTML = '';
+      const filtered = stories.filter(story => {
+        const matchesGenre = activeGenre === '' || story.genre === activeGenre;
+        const matchesSearch = story.title.toLowerCase().includes(searchTerm) || story.author.toLowerCase().includes(searchTerm);
+        return matchesGenre && matchesSearch;
+      });
+
+      if (filtered.length === 0) {
+        storiesGrid.innerHTML = '<p class="col-span-full text-center text-gray-600 text-lg">No stories found.</p>';
+        return;
+      }
+
+      filtered.forEach(story => {
+        const card = document.createElement('article');
+        card.className = 'story-card';
+
+        card.innerHTML = `
+          <div class="story-image relative">
+            <img src="${story.img}" alt="${story.alt}" loading="lazy" />
+            <div class="genre-badge">${story.genre}</div>
+          </div>
+          <div class="story-content">
+            <h3 class="story-title">${story.title}</h3>
+            <p class="story-author">By ${story.author}</p>
+            <p class="story-excerpt">${story.excerpt}</p>
+            <a href="${story.readLink}" class="btn-read" aria-label="Read story ${story.title}">Read Story <i class="fas fa-arrow-right"></i></a>
+          </div>
+        `;
+        storiesGrid.appendChild(card);
+      });
+    }
+
+    // Filter button click handler
+    genreFilters.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        genreFilters.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        activeGenre = btn.getAttribute('data-genre');
+        renderStories();
+      });
+    });
+
+    // Search input handler
+    searchInput.addEventListener('input', e => {
+      searchTerm = e.target.value.trim().toLowerCase();
+      renderStories();
+    });
+
+    // Initial render
+    renderStories();
+  </script>
+</body>
+</html>

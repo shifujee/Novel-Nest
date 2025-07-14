@@ -1,0 +1,1175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Novel Nest - Create Your Story</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables */
+    :root {
+      --primary-color: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary-color: #00cec9;
+      --accent-color: #fd79a8;
+      --text-dark: #2d3436;
+      --text-light: #636e72;
+      --bg-light: #f9f9f9;
+      --white: #ffffff;
+      --primary-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      --secondary-gradient: linear-gradient(135deg, #00cec9 0%, #81ecec 100%);
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      background-color: var(--bg-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary-gradient);
+      color: var(--white);
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-color);
+      color: var(--white);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    /* Page Loader */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 0;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .nav ul {
+      display: flex;
+    }
+
+    .nav ul li {
+      margin-left: 30px;
+    }
+
+    .nav ul li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .nav ul li a:hover::after,
+    .nav ul li a.active::after {
+      width: 100%;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    /* Page Header */
+    .page-header {
+      height: 300px;
+      background: url('https://cdn.pixabay.com/photo/2015/07/02/10/23/writing-828911_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: 70px;
+      text-align: center;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      width: 100%;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb a {
+      opacity: 0.8;
+    }
+
+    .breadcrumb a:hover {
+      opacity: 1;
+      color: var(--accent-color);
+    }
+
+    .breadcrumb span {
+      margin: 0 10px;
+      opacity: 0.6;
+    }
+
+    /* Story Submission Section */
+    .submission-section {
+      padding: 80px 0;
+    }
+
+    .submission-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: var(--white);
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: var(--box-shadow);
+    }
+
+    .auth-required {
+      background: #fff8e1;
+      border-left: 4px solid #ffc107;
+      padding: 20px;
+      margin-bottom: 30px;
+      display: flex;
+      align-items: center;
+    }
+
+    .auth-required i {
+      color: #ffc107;
+      font-size: 1.5rem;
+      margin-right: 15px;
+    }
+
+    .auth-required p {
+      flex: 1;
+    }
+
+    .auth-required a {
+      color: var(--primary-color);
+      font-weight: 500;
+    }
+
+    .auth-required a:hover {
+      text-decoration: underline;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-family: 'Poppins', sans-serif;
+      transition: var(--transition);
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--primary-color);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+    }
+
+    .form-group textarea {
+      min-height: 200px;
+      resize: vertical;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 20px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+    }
+
+    .image-upload {
+      border: 2px dashed #ddd;
+      padding: 30px;
+      text-align: center;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .image-upload:hover {
+      border-color: var(--primary-color);
+    }
+
+    .image-upload i {
+      font-size: 2rem;
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .image-upload p {
+      color: var(--text-light);
+    }
+
+    .image-upload input {
+      display: none;
+    }
+
+    .preview-image {
+      max-width: 100%;
+      max-height: 200px;
+      margin-top: 15px;
+      display: none;
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .checkbox-group input {
+      margin-right: 10px;
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    /* Login Modal */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1001;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      background: var(--white);
+      border-radius: 10px;
+      width: 100%;
+      max-width: 500px;
+      padding: 40px;
+      position: relative;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--text-light);
+    }
+
+    .close-modal:hover {
+      color: var(--text-dark);
+    }
+
+    .modal-title {
+      font-size: 1.8rem;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .auth-tabs {
+      display: flex;
+      margin-bottom: 30px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .auth-tab {
+      padding: 10px 20px;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .auth-tab.active {
+      color: var(--primary-color);
+    }
+
+    .auth-tab.active::after {
+      content: '';
+      position: absolute;
+      bottom: -1px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--primary-color);
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .social-login {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .social-login p {
+      color: var(--text-light);
+      margin-bottom: 15px;
+      position: relative;
+    }
+
+    .social-login p::before,
+    .social-login p::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 30%;
+      height: 1px;
+      background: #eee;
+    }
+
+    .social-login p::before {
+      left: 0;
+    }
+
+    .social-login p::after {
+      right: 0;
+    }
+
+    .social-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-btn {
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--white);
+      font-size: 1.2rem;
+    }
+
+    .social-btn.facebook {
+      background: #3b5998;
+    }
+
+    .social-btn.google {
+      background: #db4437;
+    }
+
+    .social-btn.twitter {
+      background: #1da1f2;
+    }
+
+    /* Guidelines Section */
+    .guidelines-section {
+      padding: 60px 0;
+      background: var(--white);
+    }
+
+    .guidelines-container {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .guideline-item {
+      margin-bottom: 30px;
+    }
+
+    .guideline-item h3 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+    }
+
+    .guideline-item h3 i {
+      color: var(--primary-color);
+      margin-right: 10px;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      padding: 80px 0;
+      background: var(--primary-gradient);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px 0 0 50px;
+      font-size: 1rem;
+    }
+
+    .newsletter-form button {
+      padding: 15px 30px;
+      background: var(--accent-color);
+      color: var(--white);
+      border: none;
+      border-radius: 0 50px 50px 0;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-form button:hover {
+      background: #e84393;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 80px 0 0;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary-color);
+    }
+
+    .footer-section p {
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      background: var(--primary-color);
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--primary-color);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.7;
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--white);
+        transition: var(--transition);
+        z-index: 999;
+      }
+
+      .nav.active {
+        left: 0;
+      }
+
+      .nav ul {
+        flex-direction: column;
+        padding: 30px;
+      }
+
+      .nav ul li {
+        margin: 15px 0;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .form-row {
+        flex-direction: column;
+        gap: 0;
+      }
+
+      .form-actions {
+        flex-direction: column;
+      }
+
+      .form-actions .btn {
+        width: 100%;
+        margin-bottom: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader"></div>
+  </div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">Novel Nest</div>
+      <button class="mobile-nav-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav">
+        <ul>
+          <li><a href="E:\websitebuildlearn\full project 1\index.html" class="active">Home</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\book.html">Books</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Authors.html">Authors</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\User Stories.html">User Stories</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Create Story.html">Create Story</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\about.html">About</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\contact us.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container page-header-content">
+      <h1>Share Your Story</h1>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="story-submission.html">Create Story</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Story Submission Section -->
+  <section class="submission-section">
+    <div class="container">
+      <div class="submission-container">
+        <!-- Authentication Required Notice -->
+        <div class="auth-required" id="authNotice">
+          <i class="fas fa-exclamation-circle"></i>
+          <p>You need to <a href="#" id="loginLink">sign in</a> or <a href="#" id="registerLink">register</a> to submit your story. Don't worry, it's free!</p>
+        </div>
+
+        <form id="storyForm" style="display: none;">
+          <div class="form-group">
+            <label for="storyTitle">Story Title</label>
+            <input type="text" id="storyTitle" placeholder="Enter your story title" required>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="storyGenre">Genre</label>
+              <select id="storyGenre" required>
+                <option value="">Select a genre</option>
+                <option value="fantasy">Fantasy</option>
+                <option value="romance">Romance</option>
+                <option value="mystery">Mystery</option>
+                <option value="sci-fi">Science Fiction</option>
+                <option value="horror">Horror</option>
+                <option value="adventure">Adventure</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="storyLanguage">Language</label>
+              <select id="storyLanguage" required>
+                <option value="english">English</option>
+                <option value="spanish">Spanish</option>
+                <option value="french">French</option>
+                <option value="german">German</option>
+                <option value="japanese">Japanese</option>
+                <option value="other">Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="storyCover">Cover Image (Optional)</label>
+            <div class="image-upload" id="imageUpload">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Click to upload a cover image</p>
+              <input type="file" id="storyCover" accept="image/*">
+              <img id="previewImage" class="preview-image" alt="Preview">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="storyExcerpt">Short Excerpt (Max 200 characters)</label>
+            <textarea id="storyExcerpt" maxlength="200" placeholder="Give readers a taste of your story..." required></textarea>
+            <small id="excerptCounter">0/200 characters</small>
+          </div>
+
+          <div class="form-group">
+            <label for="storyContent">Your Story</label>
+            <textarea id="storyContent" placeholder="Begin your masterpiece here..." required></textarea>
+          </div>
+
+          <div class="form-group">
+            <label>Tags (Optional)</label>
+            <input type="text" id="storyTags" placeholder="Add tags separated by commas (e.g., magic, adventure, romance)">
+          </div>
+
+          <div class="form-group">
+            <div class="checkbox-group">
+              <input type="checkbox" id="agreeTerms" required>
+              <label for="agreeTerms">I agree to the <a href="#">Terms of Service</a> and <a href="#">Content Guidelines</a></label>
+            </div>
+            <div class="checkbox-group">
+              <input type="checkbox" id="allowComments">
+              <label for="allowComments">Allow readers to comment on my story</label>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary">Save Draft</button>
+            <button type="submit" class="btn">Publish Story</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Guidelines Section -->
+  <section class="guidelines-section">
+    <div class="container">
+      <h2 class="section-title">Story Submission Guidelines</h2>
+      <div class="guidelines-container">
+        <div class="guideline-item">
+          <h3><i class="fas fa-pen-alt"></i> Original Content Only</h3>
+          <p>We only accept original stories that you've written yourself. Plagiarism will result in immediate removal of your content and possible account suspension.</p>
+        </div>
+        <div class="guideline-item">
+          <h3><i class="fas fa-child"></i> Appropriate Content</h3>
+          <p>While we encourage creative freedom, please ensure your content is appropriate for our diverse audience. Explicit content should be properly tagged.</p>
+        </div>
+        <div class="guideline-item">
+          <h3><i class="fas fa-heart"></i> Respect Copyrights</h3>
+          <p>Do not include copyrighted characters or settings without permission. Fan fiction is allowed only if it complies with the original creator's guidelines.</p>
+        </div>
+        <div class="guideline-item">
+          <h3><i class="fas fa-star"></i> Quality Matters</h3>
+          <p>While we don't expect perfection, please proofread your work before submitting. Well-written stories receive more engagement from readers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <h2>Join Our Writing Community</h2>
+      <p>Get writing tips, participate in challenges, and connect with fellow authors in our vibrant community.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Novel Nest</h3>
+          <p>Your portal to endless worlds of novels. Discover, explore, and experience the magic of literary masterpieces.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="authors.html">Authors</a></li>
+            <li><a href="user-stories.html">User Stories</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul class="footer-links">
+            <li><a href="story-submission.html">Create Story</a></li>
+            <li><a href="#">Writer's Guidelines</a></li>
+            <li><a href="#">Content Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Novel Street, Literary Lane, New York</p>
+          <p><i class="fas fa-phone"></i> +1 555-123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@novelnest.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Novel Nest. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Login Modal -->
+  <div class="modal" id="authModal">
+    <div class="modal-content">
+      <span class="close-modal">&times;</span>
+      <h2 class="modal-title">Welcome to Novel Nest</h2>
+      
+      <div class="auth-tabs">
+        <div class="auth-tab active" data-tab="login">Sign In</div>
+        <div class="auth-tab" data-tab="register">Register</div>
+      </div>
+
+      <!-- Login Form -->
+      <form class="auth-form active" id="loginForm">
+        <div class="form-group">
+          <label for="loginEmail">Email</label>
+          <input type="email" id="loginEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" required>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="rememberMe">
+            <label for="rememberMe">Remember me</label>
+          </div>
+        </div>
+        <button type="submit" class="btn">Sign In</button>
+        <p style="text-align: center; margin-top: 15px;"><a href="#" id="forgotPassword">Forgot password?</a></p>
+      </form>
+
+      <!-- Registration Form -->
+      <form class="auth-form" id="registerForm">
+        <div class="form-group">
+          <label for="registerName">Username</label>
+          <input type="text" id="registerName" required>
+        </div>
+        <div class="form-group">
+          <label for="registerEmail">Email</label>
+          <input type="email" id="registerEmail" required>
+        </div>
+        <div class="form-group">
+          <label for="registerPassword">Password</label>
+          <input type="password" id="registerPassword" required>
+        </div>
+        <div class="form-group">
+          <label for="registerConfirm">Confirm Password</label>
+          <input type="password" id="registerConfirm" required>
+        </div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="agreeNewsletter">
+            <label for="agreeNewsletter">Subscribe to our newsletter</label>
+          </div>
+        </div>
+        <button type="submit" class="btn">Create Account</button>
+      </form>
+
+      <div class="social-login">
+        <p>Or sign in with</p>
+        <div class="social-buttons">
+          <a href="#" class="social-btn facebook"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+          <a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Page Loader
+    window.addEventListener('load', function() {
+      document.querySelector('.page-loader').style.display = 'none';
+    });
+
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const nav = document.querySelector('.nav');
+
+    mobileNavToggle.addEventListener('click', function() {
+      nav.classList.toggle('active');
+      this.querySelector('i').classList.toggle('fa-times');
+      this.querySelector('i').classList.toggle('fa-bars');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        nav.classList.remove('active');
+        mobileNavToggle.querySelector('i').classList.add('fa-bars');
+        mobileNavToggle.querySelector('i').classList.remove('fa-times');
+      });
+    });
+
+    // Check if user is logged in (simulated)
+    let isLoggedIn = false; // Change to true to test logged in state
+
+    // DOM Elements
+    const authNotice = document.getElementById('authNotice');
+    const storyForm = document.getElementById('storyForm');
+    const loginLink = document.getElementById('loginLink');
+    const registerLink = document.getElementById('registerLink');
+    const authModal = document.getElementById('authModal');
+    const closeModal = document.querySelector('.close-modal');
+    const authTabs = document.querySelectorAll('.auth-tab');
+    const authForms = document.querySelectorAll('.auth-form');
+    const excerptTextarea = document.getElementById('storyExcerpt');
+    const excerptCounter = document.getElementById('excerptCounter');
+    const imageUpload = document.getElementById('imageUpload');
+    const previewImage = document.getElementById('previewImage');
+    const storyCover = document.getElementById('storyCover');
+
+    // Initialize page based on login status
+    function initPage() {
+      if (isLoggedIn) {
+        authNotice.style.display = 'none';
+        storyForm.style.display = 'block';
+      } else {
+        authNotice.style.display = 'flex';
+        storyForm.style.display = 'none';
+      }
+    }
+
+    // Show modal when login/register links are clicked
+    loginLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      authModal.style.display = 'flex';
+      switchTab('login');
+    });
+
+    registerLink.addEventListener('click', function(e) {
+      e.preventDefault();
+      authModal.style.display = 'flex';
+      switchTab('register');
+    });
+
+    // Close modal
+    closeModal.addEventListener('click', function() {
+      authModal.style.display = 'none';
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', function(e) {
+      if (e.target === authModal) {
+        authModal.style.display = 'none';
+      }
+    });
+
+    // Switch between login and register tabs
+    authTabs.forEach(tab => {
+      tab.addEventListener('click', function() {
+        const tabId = this.getAttribute('data-tab');
+        switchTab(tabId);
+      });
+    });
+
+    function switchTab(tabId) {
+      authTabs.forEach(tab => {
+        if (tab.getAttribute('data-tab') === tabId) {
+          tab.classList.add('active');
+        } else {
+          tab.classList.remove('active');
+        }
+      });
+
+      authForms.forEach(form => {
+        if (form.id === `${tabId}Form`) {
+          form.classList.add('active');
+        } else {
+          form.classList.remove('active');
+        }
+      });
+    }
+
+    // Handle login form submission
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Simulate login
+      isLoggedIn = true;
+      authModal.style.display = 'none';
+      initPage();
+      alert('Login successful! You can now submit your story.');
+    });
+
+    // Handle registration form submission
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      // Simulate registration and login
+      isLoggedIn = true;
+      authModal.style.display = 'none';
+      initPage();
+      alert('Registration successful! You are now logged in and can submit your story.');
+    });
+
+    // Character counter for excerpt
+    excerptTextarea.addEventListener('input', function() {
+      const count = this.value.length;
+      excerptCounter.textContent = `${count}/200 characters`;
+    });
+
+    // Image upload preview
+    imageUpload.addEventListener('click', function() {
+      storyCover.click();
+    });
+
+    storyCover.addEventListener('change', function() {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          previewImage.src = e.target.result;
+          previewImage.style.display = 'block';
+        }
+        reader.readAsDataURL(file);
+      }
+    });
+
+    // Handle story form submission
+    document.getElementById('storyForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Your story has been submitted successfully! It will be reviewed before publishing.');
+      // Here you would typically send the form data to your server
+      this.reset();
+      previewImage.style.display = 'none';
+    });
+
+    // Initialize the page
+    initPage();
+  </script>
+</body>
+</html>

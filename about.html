@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us - Novel Nest</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* CSS Variables */
+    :root {
+      --primary-color: #6c5ce7;
+      --primary-dark: #5649c0;
+      --secondary-color: #00cec9;
+      --accent-color: #fd79a8;
+      --text-dark: #2d3436;
+      --text-light: #636e72;
+      --bg-light: #f9f9f9;
+      --white: #ffffff;
+      --primary-gradient: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
+      --secondary-gradient: linear-gradient(135deg, #00cec9 0%, #81ecec 100%);
+      --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    /* Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      color: var(--text-dark);
+      background-color: var(--bg-light);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      line-height: 1.2;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+      transition: var(--transition);
+    }
+
+    ul {
+      list-style: none;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 30px;
+      background: var(--primary-gradient);
+      color: var(--white);
+      border-radius: 50px;
+      font-weight: 500;
+      transition: var(--transition);
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+
+    .btn-secondary {
+      background: var(--white);
+      color: var(--primary-color);
+      border: 2px solid var(--primary-color);
+    }
+
+    .btn-secondary:hover {
+      background: var(--primary-color);
+      color: var(--white);
+      box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+    }
+
+    .section-title {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80px;
+      height: 4px;
+      background: var(--primary-gradient);
+      border-radius: 2px;
+    }
+
+    /* Page Loader */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--white);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid var(--primary-color);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* Header */
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 20px 0;
+      background: var(--white);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      transition: var(--transition);
+    }
+
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .nav ul {
+      display: flex;
+    }
+
+    .nav ul li {
+      margin-left: 30px;
+    }
+
+    .nav ul li a {
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--primary-color);
+      transition: var(--transition);
+    }
+
+    .nav ul li a:hover::after,
+    .nav ul li a.active::after {
+      width: 100%;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: var(--primary-color);
+      cursor: pointer;
+    }
+
+    /* Page Header */
+    .page-header {
+      height: 300px;
+      background: url('https://cdn.pixabay.com/photo/2017/08/06/22/01/books-2596809_1280.jpg') no-repeat center center/cover;
+      display: flex;
+      align-items: center;
+      position: relative;
+      margin-top: 70px;
+      text-align: center;
+    }
+
+    .page-header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .page-header-content {
+      position: relative;
+      z-index: 1;
+      color: var(--white);
+      width: 100%;
+    }
+
+    .page-header h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
+    }
+
+    .breadcrumb {
+      display: flex;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .breadcrumb a {
+      opacity: 0.8;
+    }
+
+    .breadcrumb a:hover {
+      opacity: 1;
+      color: var(--accent-color);
+    }
+
+    .breadcrumb span {
+      margin: 0 10px;
+      opacity: 0.6;
+    }
+
+    /* About Section */
+    .about-section {
+      padding: 80px 0;
+    }
+
+    .about-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      align-items: center;
+      margin-bottom: 60px;
+    }
+
+    .about-image {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+    }
+
+    .about-text h2 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      margin-bottom: 20px;
+      color: var(--text-light);
+    }
+
+    /* Mission Section */
+    .mission-section {
+      background: var(--white);
+      padding: 80px 0;
+    }
+
+    .mission-container {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .mission-container p {
+      font-size: 1.1rem;
+      color: var(--text-light);
+      margin-bottom: 30px;
+    }
+
+    /* Team Section */
+    .team-section {
+      padding: 80px 0;
+    }
+
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .team-member {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: var(--box-shadow);
+      transition: var(--transition);
+      text-align: center;
+    }
+
+    .team-member:hover {
+      transform: translateY(-10px);
+    }
+
+    .member-image {
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .member-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: var(--transition);
+    }
+
+    .team-member:hover .member-image img {
+      transform: scale(1.05);
+    }
+
+    .member-info {
+      padding: 20px;
+    }
+
+    .member-info h3 {
+      font-size: 1.3rem;
+      margin-bottom: 5px;
+    }
+
+    .member-info p {
+      color: var(--primary-color);
+      margin-bottom: 15px;
+    }
+
+    .member-social {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .member-social a {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: var(--bg-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .member-social a:hover {
+      background: var(--primary-color);
+      color: var(--white);
+    }
+
+    /* Stats Section */
+    .stats-section {
+      background: var(--primary-gradient);
+      color: var(--white);
+      padding: 60px 0;
+      text-align: center;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 30px;
+      margin-top: 50px;
+    }
+
+    .stat-item h3 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    .stat-item p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* Newsletter */
+    .newsletter {
+      padding: 80px 0;
+      background: var(--primary-gradient);
+      color: var(--white);
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+    }
+
+    .newsletter p {
+      max-width: 600px;
+      margin: 0 auto 30px;
+      opacity: 0.9;
+    }
+
+    .newsletter-form {
+      display: flex;
+      max-width: 500px;
+      margin: 0 auto;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 15px 20px;
+      border: none;
+      border-radius: 50px 0 0 50px;
+      font-size: 1rem;
+    }
+
+    .newsletter-form button {
+      padding: 15px 30px;
+      background: var(--accent-color);
+      color: var(--white);
+      border: none;
+      border-radius: 0 50px 50px 0;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .newsletter-form button:hover {
+      background: #e84393;
+    }
+
+    /* Footer */
+    .footer {
+      background: var(--text-dark);
+      color: var(--white);
+      padding: 80px 0 0;
+    }
+
+    .footer-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    .footer-section h3 {
+      font-size: 1.5rem;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .footer-section h3::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50px;
+      height: 3px;
+      background: var(--primary-color);
+    }
+
+    .footer-section p {
+      margin-bottom: 20px;
+      opacity: 0.8;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-social a {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: var(--transition);
+    }
+
+    .footer-social a:hover {
+      background: var(--primary-color);
+    }
+
+    .footer-links li {
+      margin-bottom: 10px;
+    }
+
+    .footer-links a {
+      opacity: 0.8;
+      transition: var(--transition);
+    }
+
+    .footer-links a:hover {
+      opacity: 1;
+      color: var(--primary-color);
+      padding-left: 5px;
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      opacity: 0.7;
+    }
+
+    /* Mobile Menu */
+    @media (max-width: 768px) {
+      .mobile-nav-toggle {
+        display: block;
+      }
+
+      .nav {
+        position: fixed;
+        top: 80px;
+        left: -100%;
+        width: 100%;
+        height: calc(100vh - 80px);
+        background: var(--white);
+        transition: var(--transition);
+        z-index: 999;
+      }
+
+      .nav.active {
+        left: 0;
+      }
+
+      .nav ul {
+        flex-direction: column;
+        padding: 30px;
+      }
+
+      .nav ul li {
+        margin: 15px 0;
+      }
+
+      .page-header h1 {
+        font-size: 2.2rem;
+      }
+
+      .about-content {
+        grid-template-columns: 1fr;
+      }
+
+      .about-image {
+        order: -1;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Page Loader -->
+  <div class="page-loader">
+    <div class="loader"></div>
+  </div>
+
+  <header class="header">
+    <div class="container header-container">
+      <div class="logo">Novel Nest</div>
+      <button class="mobile-nav-toggle">
+        <i class="fas fa-bars"></i>
+      </button>
+      <nav class="nav">
+        <ul>
+          <li><a href="E:\websitebuildlearn\full project 1\index.html" class="active">Home</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\book.html">Books</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Authors.html">Authors</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\User Stories.html">User Stories</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\Create Story.html">Create Story</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\about.html">About</a></li>
+          <li><a href="E:\websitebuildlearn\full project 1\contact us.html">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Header -->
+  <section class="page-header">
+    <div class="container page-header-content">
+      <h1>Our Story</h1>
+      <div class="breadcrumb">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="about.html">About</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section class="about-section">
+    <div class="container">
+      <div class="about-content">
+        <div class="about-text">
+          <h2>Welcome to Novel Nest</h2>
+          <p>Founded in 2018, Novel Nest began as a small community of book lovers who wanted to create a space where readers and writers could connect. What started as a passion project has grown into one of the most vibrant literary communities online.</p>
+          <p>Our platform is dedicated to celebrating the art of storytelling in all its forms. Whether you're an avid reader looking for your next favorite book or an aspiring writer seeking an audience for your work, Novel Nest is your home.</p>
+          <p>We believe that everyone has a story to tell, and we're committed to providing the tools and community support to help those stories find their voice.</p>
+        </div>
+        <div class="about-image">
+          <img src="https://cdn.pixabay.com/photo/2015/11/19/21/14/book-1052014_1280.jpg" alt="About Novel Nest">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Mission Section -->
+  <section class="mission-section">
+    <div class="container">
+      <h2 class="section-title">Our Mission</h2>
+      <div class="mission-container">
+        <p>At Novel Nest, we're on a mission to democratize storytelling. We want to break down the barriers that prevent talented writers from sharing their work and make literature accessible to everyone, everywhere.</p>
+        <p>We envision a world where every voice can be heard, where stories from diverse backgrounds and perspectives are celebrated, and where the love of reading and writing brings people together.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="stats-section">
+    <div class="container">
+      <h2 class="section-title">By The Numbers</h2>
+      <div class="stats-grid">
+        <div class="stat-item">
+          <h3>50,000+</h3>
+          <p>Stories Published</p>
+        </div>
+        <div class="stat-item">
+          <h3>250,000+</h3>
+          <p>Community Members</p>
+        </div>
+        <div class="stat-item">
+          <h3>5M+</h3>
+          <p>Monthly Reads</p>
+        </div>
+        <div class="stat-item">
+          <h3>100+</h3>
+          <p>Countries Reached</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team-section">
+    <div class="container">
+      <h2 class="section-title">Meet The Team</h2>
+      <div class="team-grid">
+        <div class="team-member">
+          <div class="member-image">
+            <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah Johnson">
+          </div>
+          <div class="member-info">
+            <h3>Sarah Johnson</h3>
+            <p>Founder & CEO</p>
+            <div class="member-social">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-image">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Michael Chen">
+          </div>
+          <div class="member-info">
+            <h3>Michael Chen</h3>
+            <p>Technical Director</p>
+            <div class="member-social">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-image">
+            <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Emma Rodriguez">
+          </div>
+          <div class="member-info">
+            <h3>Emma Rodriguez</h3>
+            <p>Editorial Director</p>
+            <div class="member-social">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="team-member">
+          <div class="member-image">
+            <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="David Kim">
+          </div>
+          <div class="member-info">
+            <h3>David Kim</h3>
+            <p>Community Manager</p>
+            <div class="member-social">
+              <a href="#"><i class="fab fa-twitter"></i></a>
+              <a href="#"><i class="fab fa-linkedin-in"></i></a>
+              <a href="#"><i class="fas fa-envelope"></i></a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter -->
+  <section class="newsletter">
+    <div class="container">
+      <h2>Join Our Literary Community</h2>
+      <p>Subscribe to receive updates, writing tips, and exclusive content from our growing community of authors and readers.</p>
+      <form class="newsletter-form">
+        <input type="email" placeholder="Enter your email" required>
+        <button type="submit">Subscribe</button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-container">
+        <div class="footer-section">
+          <h3>Novel Nest</h3>
+          <p>Your portal to endless worlds of novels. Discover, explore, and experience the magic of literary masterpieces.</p>
+          <div class="footer-social">
+            <a href="#"><i class="fab fa-facebook-f"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="books.html">Books</a></li>
+            <li><a href="authors.html">Authors</a></li>
+            <li><a href="user-stories.html">User Stories</a></li>
+            <li><a href="about.html">About Us</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Community</h3>
+          <ul class="footer-links">
+            <li><a href="story-submission.html">Create Story</a></li>
+            <li><a href="#">Writer's Guidelines</a></li>
+            <li><a href="#">Content Policy</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+            <li><a href="#">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p><i class="fas fa-map-marker-alt"></i> 123 Novel Street, Literary Lane, New York</p>
+          <p><i class="fas fa-phone"></i> +1 555-123-4567</p>
+          <p><i class="fas fa-envelope"></i> info@novelnest.com</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2025 Novel Nest. All Rights Reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Page Loader
+    window.addEventListener('load', function() {
+      document.querySelector('.page-loader').style.display = 'none';
+    });
+
+    // Mobile Navigation Toggle
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const nav = document.querySelector('.nav');
+
+    mobileNavToggle.addEventListener('click', function() {
+      nav.classList.toggle('active');
+      this.querySelector('i').classList.toggle('fa-times');
+      this.querySelector('i').classList.toggle('fa-bars');
+    });
+
+    // Close mobile menu when clicking on a link
+    document.querySelectorAll('.nav a').forEach(link => {
+      link.addEventListener('click', function() {
+        nav.classList.remove('active');
+        mobileNavToggle.querySelector('i').classList.add('fa-bars');
+        mobileNavToggle.querySelector('i').classList.remove('fa-times');
+      });
+    });
+  </script>
+</body>
+</html>
